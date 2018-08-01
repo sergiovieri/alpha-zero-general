@@ -75,8 +75,18 @@ class TroopsGame(Game):
     def getGameEnded(self, board, player):
         b = Board(self.n)
         b.pieces = np.copy(board)
-        if b.pieces[0][0] == 0 or b.pieces[0][self.n - 1] == 0: return -player
-        if b.pieces[self.n - 1][0] == 0 or b.pieces[self.n - 1][self.n - 1] == 0: return player
+        num = [0, 0, 0]
+        for i in [0, self.n - 1]:
+            for j in [0, self.n - 1]:
+                num[b.pieces[i][j] + 1] += 1
+
+        if num[0] != num[2]:
+            if num[0] > num[2]:
+                return -player
+            else:
+                return player
+
+        assert(num[0] == 2)
         return 0
 
     def getCanonicalForm(self, board, player):

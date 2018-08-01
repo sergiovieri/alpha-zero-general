@@ -45,6 +45,8 @@ class Coach():
 
         while True:
 
+            print("now\n%s" % board)
+
             episodeStep += 1
             canonicalBoard = self.game.getCanonicalForm(board, self.curPlayer)
             temp = int(episodeStep < self.args.tempThreshold)
