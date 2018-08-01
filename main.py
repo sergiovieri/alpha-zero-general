@@ -22,7 +22,6 @@ args = dotdict({
 })
 
 if __name__=="__main__":
-    sys.setrecursionlimit(100000)
     g = Game(8)
     nnet = nn(g)
 
