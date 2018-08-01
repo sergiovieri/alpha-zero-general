@@ -63,9 +63,11 @@ class Coach():
                 r = self.game.getGameEnded(board, self.curPlayer)
 
             if r == 2:
+                print("Drawn")
                 return [(x[0], x[2], 0) for x in trainExamples]
 
             if r!=0:
+                print("%d won at %d" % (r * self.curPlayer, episodeStep))
                 return [(x[0],x[2],r*((-1)**(x[1]!=self.curPlayer))) for x in trainExamples]
 
     def learn(self):
