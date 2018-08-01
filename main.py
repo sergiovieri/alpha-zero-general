@@ -13,6 +13,7 @@ args = dotdict({
     'numMCTSSims': 25,
     'arenaCompare': 40,
     'cpuct': 2,
+    'drawThreshold': 100,
 
     'checkpoint': './temp/',
     'load_model': False,
@@ -22,6 +23,7 @@ args = dotdict({
 })
 
 if __name__=="__main__":
+    sys.setrecursionlimit(1000000)
     g = Game(8)
     nnet = nn(g)
 
