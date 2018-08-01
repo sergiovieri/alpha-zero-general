@@ -1,17 +1,18 @@
 from Coach import Coach
-from othello.OthelloGame import OthelloGame as Game
-from othello.pytorch.NNet import NNetWrapper as nn
+from troops.TroopsGame import TroopsGame as Game
+from troops.pytorch.NNet import NNetWrapper as nn
 from utils import *
+import sys
 
 args = dotdict({
     'numIters': 1000,
     'numEps': 100,
-    'tempThreshold': 15,
+    'tempThreshold': 1000,
     'updateThreshold': 0.6,
     'maxlenOfQueue': 200000,
     'numMCTSSims': 25,
     'arenaCompare': 40,
-    'cpuct': 1,
+    'cpuct': 2,
 
     'checkpoint': './temp/',
     'load_model': False,
@@ -21,7 +22,8 @@ args = dotdict({
 })
 
 if __name__=="__main__":
-    g = Game(6)
+    sys.setrecursionlimit(100000)
+    g = Game(8)
     nnet = nn(g)
 
     if args.load_model:
