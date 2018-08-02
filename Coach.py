@@ -57,10 +57,7 @@ class Coach():
             action = np.random.choice(len(pi), p=pi)
             board, self.curPlayer = self.game.getNextState(board, self.curPlayer, action)
 
-            if episodeStep > self.args.drawThreshold:
-                r = 2
-            else:
-                r = self.game.getGameEnded(board, self.curPlayer)
+            r = self.game.getGameEnded(board, self.curPlayer)
 
             if r == 2:
                 print("Drawn")

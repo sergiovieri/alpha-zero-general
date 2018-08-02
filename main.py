@@ -24,7 +24,7 @@ args = dotdict({
 
 if __name__=="__main__":
     sys.setrecursionlimit(1000000)
-    g = Game(8)
+    g = Game(8, args)
     nnet = nn(g)
 
     if args.load_model:

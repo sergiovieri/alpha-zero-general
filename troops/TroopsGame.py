@@ -10,9 +10,9 @@ class TroopsGame(Game):
 
     __moves = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
 
-
-    def __init__(self, n):
+    def __init__(self, n, args):
         self.n = n
+        self.args = args
 
         print("precompute actions")
         # precompute actions
@@ -45,7 +45,7 @@ class TroopsGame(Game):
     def getInitBoard(self):
         # return initial board (numpy board)
         b = Board(self.n)
-        return np.array(b.pieces)
+        return np.array(b.pieces), 0
 
     def getBoardSize(self):
         # (a,b) tuple
@@ -58,13 +58,15 @@ class TroopsGame(Game):
     def getNextState(self, board, player, action):
         # if player takes action on board, return next (board,player)
         # action must be a valid move
+        board, ply = board
         b = Board(self.n)
         b.pieces = np.copy(board)
         b.execute_move(self.actions[action], player)
-        return (b.pieces, -player)
+        return ((b.pieces, ply + 1), -player)
 
     def getValidMoves(self, board, player):
         # return a fixed size binary vector
+        board, ply = board
         valids = [0]*self.getActionSize()
         b = Board(self.n)
         b.pieces = np.copy(board)
@@ -73,6 +75,8 @@ class TroopsGame(Game):
         return np.array(valids)
 
     def getGameEnded(self, board, player):
+        board, ply = board
+        if ply > self.args.drawThreshold: return 2
         b = Board(self.n)
         b.pieces = np.copy(board)
         num = [0, 0, 0]
@@ -82,8 +86,10 @@ class TroopsGame(Game):
 
         if num[0] != num[2]:
             if num[0] > num[2]:
+                assert(num[0] == 2 and num[2] == 1)
                 return -player
             else:
+                assert(num[0] == 1 and num[2] == 2)
                 return player
 
         assert(num[0] == 2)
@@ -91,11 +97,11 @@ class TroopsGame(Game):
 
     def getCanonicalForm(self, board, player):
         # return state if player==1, else return -state if player==-1
-        return player * board
+        return (player * board[0], board[1])
 
     def stringRepresentation(self, board):
         # nxn numpy array (canonical board)
-        return board.tostring()
+        return board[0].tostring() + str(board[1]).encode()
 
     def getSymmetries(self, board, pi):
         # mirror, rotational
