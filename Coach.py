@@ -127,7 +127,7 @@ class Coach():
             print('PITTING AGAINST PREVIOUS VERSION')
             arena = Arena(lambda x: self.match(pmcts, x),
                           lambda x: self.match(nmcts, x), self.game, display=display)
-            pwins, nwins, draws = arena.playGames(self.args.arenaCompare, verbose=True)
+            pwins, nwins, draws = arena.playGames(self.args.arenaCompare, verbose=False)
 
             print('NEW/PREV WINS : %d / %d ; DRAWS : %d' % (nwins, pwins, draws))
             if pwins+nwins > 0 and float(nwins)/(pwins+nwins) < self.args.updateThreshold:
