@@ -6,6 +6,7 @@ from pytorch_classification.utils import Bar, AverageMeter
 import time, os, sys
 from pickle import Pickler, Unpickler
 from random import shuffle
+from troops.TroopsGame import display
 
 
 class Coach():
@@ -124,9 +125,9 @@ class Coach():
             nmcts = MCTS(self.game, self.nnet, self.args)
 
             print('PITTING AGAINST PREVIOUS VERSION')
-            arena = Arena(lambda x: np.argmax(pmcts.getActionProb(x, temp=0)),
-                          lambda x: np.argmax(nmcts.getActionProb(x, temp=0)), self.game)
-            pwins, nwins, draws = arena.playGames(self.args.arenaCompare)
+            arena = Arena(lambda x: self.match(pmcts, x),
+                          lambda x: self.match(nmcts, x), self.game, display=display)
+            pwins, nwins, draws = arena.playGames(self.args.arenaCompare, verbose=True)
 
             print('NEW/PREV WINS : %d / %d ; DRAWS : %d' % (nwins, pwins, draws))
             if pwins+nwins > 0 and float(nwins)/(pwins+nwins) < self.args.updateThreshold:
@@ -136,6 +137,18 @@ class Coach():
                 print('ACCEPTING NEW MODEL')
                 self.nnet.save_checkpoint(folder=self.args.checkpoint, filename=self.getCheckpointFile(i))
                 self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='best.pth.tar')                
+
+    def match(self, mcts, board):
+        ply = board[1]
+        # if ply > 20:
+        # return self.argmax(mcts.getActionProb(board, temp=1))
+        pi = mcts.getActionProb(board, temp=(150-ply)/150)
+        return np.random.choice(len(pi), p=pi)
+
+
+    def argmax(self, pi):
+        mx = np.amax(pi)
+        return np.random.choice(np.flatnonzero(pi == mx))
 
     def getCheckpointFile(self, iteration):
         return 'checkpoint_' + str(iteration) + '.pth.tar'

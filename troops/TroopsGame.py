@@ -40,6 +40,8 @@ class TroopsGame(Game):
                                 if 0 <= shoot_r < n and 0 <= shoot_c < n:
                                     self.actions.append((origin_r, origin_c, target_r, target_c, shoot_r, shoot_c))
 
+        
+
         print("sz %d" % len(self.actions))
 
     def getInitBoard(self):
@@ -111,7 +113,7 @@ class TroopsGame(Game):
 def display(board):
     board, ply = board
     print("Ply: %d" % ply)
-    
+
     n = board.shape[0]
 
     for y in range(n):
