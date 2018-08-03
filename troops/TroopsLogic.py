@@ -19,7 +19,14 @@ class Board():
         origin_r, origin_c, target_r, target_c, shoot_r, shoot_c = move
         if self.pieces[origin_r][origin_c] != player: return False
         if self.pieces[target_r][target_c] != 0: return False
-        if shoot_r == target_r and shoot_c == target_c: return True
+        if shoot_r == target_r and shoot_c == target_c:
+            for i in range(-1, 2):
+                for j in range(-1, 2):
+                    r = target_r + i
+                    c = target_c + j
+                    if 0 <= r < self.n and 0 <= c < self.n:
+                        if self.pieces[r][c] == -player: return False
+            return True
         return self.pieces[shoot_r][shoot_c] == -player
 
     def execute_move(self, move, player):
