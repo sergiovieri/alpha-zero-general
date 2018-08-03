@@ -13,11 +13,11 @@ args = dotdict({
     'numMCTSSims': 100,
     'arenaCompare': 40,
     'cpuct': 2,
-    'drawThreshold': 100,
+    'drawThreshold': 200,
 
     'checkpoint': './temp/',
-    'load_model': False,
-    'load_folder_file': ('/dev/models/8x100x50','best.pth.tar'),
+    'load_model': True,
+    'load_folder_file': ('./temp/','best.pth.tar'),
     'numItersForTrainExamplesHistory': 20,
 
 })
@@ -34,4 +34,4 @@ if __name__=="__main__":
     if args.load_model:
         print("Load trainExamples from file")
         c.loadTrainExamples()
-    c.learn()
+    c.learn(iterStart=26)
