@@ -142,7 +142,7 @@ class Coach():
         ply = board[1]
         # if ply > 20:
         # return self.argmax(mcts.getActionProb(board, temp=1))
-        pi = mcts.getActionProb(board, temp=(150-ply)/150)
+        pi = mcts.getActionProb(board, temp=(self.args.drawThreshold + 5 - ply)/self.args.drawThreshold)
         return np.random.choice(len(pi), p=pi)
 
 
