@@ -13,7 +13,7 @@ any agent.
 """
 
 
-def argmax(self, pi):
+def argmax(pi):
   mx = np.amax(pi)
   return np.random.choice(np.flatnonzero(pi == mx))
 
