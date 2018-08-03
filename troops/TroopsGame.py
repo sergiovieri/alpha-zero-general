@@ -95,6 +95,16 @@ class TroopsGame(Game):
                 return player
 
         assert(num[0] == 2)
+
+        for i in range(self.n):
+            for j in range(self.n):
+                num[b.pieces[i][j] + 1] -= 1
+
+        if num[0] == 0:
+            return player
+        if num[2] == 0:
+            return -player
+
         return 0
 
     def getCanonicalForm(self, board, player):
