@@ -213,7 +213,6 @@ class Board {
   void alphabeta(int depth) {
     nodes = 0;
     Board::alphabeta(this, depth, -1000000006, 1000000006, currentPlayer);
-    printf("nodes: %d\n", nodes);
   }
 
 };
@@ -273,7 +272,6 @@ int main() {
   string input;
   while (1) {
     if (!getline(cin, input)) return 0;
-    cerr << "inp " << input << endl;
     auto inputs = split(input);
     if (input == "quit") return 0;
     else if (input == "newgame") startpos();
