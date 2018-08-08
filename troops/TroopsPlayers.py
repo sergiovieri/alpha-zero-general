@@ -24,6 +24,8 @@ class AlphaBetaPlayer():
 			print("got " + bestmove, end='')
 			bestmove = self.troops.stdout.readline().decode()
 
+		print("now " + bestmove, end='')
+
 		ori_r = int(bestmove[9])
 		ori_c = int(bestmove[10])
 		tar_r = int(bestmove[12])

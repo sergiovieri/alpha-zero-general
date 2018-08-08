@@ -253,10 +253,26 @@ void go(vector<string> inputs) {
   }
 }
 
+void position(vector<string> inputs) {
+  currentBoard = new Board();
+  currentBoard -> currentPlayer = 1;
+  int cur = 1;
+  for (int i = 0; i < 8; ++i) for (int j = 0; j < 8; ++j) {
+    currentBoard -> arr[i][j] = stoi(inputs[cur]);
+    cur++;
+  }
+  if (currentBoard -> arr[0][0] == 1 || currentBoard -> arr[0][7] == 1) {
+    for (int i = 0; i < 8; ++i) for (int j = 0; j < 8; ++j) currentBoard -> arr[i][j] *= -1;
+    currentBoard -> currentPlayer = -1;
+  }
+
+  currentBoard -> print();
+}
+
 int main() {
   string input;
   while (1) {
-    getline(cin, input);
+    if (!getline(cin, input)) return 0;
     cerr << "inp " << input << endl;
     auto inputs = split(input);
     if (input == "quit") return 0;
@@ -281,6 +297,8 @@ int main() {
         currentBoard -> alphabeta(6);
         currentBoard -> print();
       }
+    } else if (inputs[0] == "position") {
+      position(inputs);
     }
   }
   return 0;
